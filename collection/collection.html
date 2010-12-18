@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>Arcateca, select no Noé!</title>
+</head>
+<body>
+<h1>{{ nome }}</h1>
+<h2>Jogos</h2>
+{% for game in games %}
+<h3><a href="/games/{{ game.1 }}">{{ game.0 }}</a></h3><br>
+{% endfor %}
+<br>
+<h3><a href="/games/new">Adicionar Jogo</a></h3>
+</html>

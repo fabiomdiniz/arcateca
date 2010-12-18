@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Arcateca, select no Noé!</title>
+</head>
+<body>
+<a href="{{ url }}">{{ url_linktext }}</a>
+{% if logged %}
+<br><a href="/collection/new">Criar Coleção</a>
+<br>
+{% for collection in collections %}
+<a href="/collection/{{ collection.1 }}">{{ collection.0 }}</a><br>
+{% endfor %}
+{% endif %}
+</body>
+</html>
