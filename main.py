@@ -9,6 +9,7 @@ from collection.views import NewCollection, ShowCollection
 from collection.models import Collection
 
 from users.models import User
+from users.views import get_or_create_user
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -16,9 +17,7 @@ class MainPage(webapp.RequestHandler):
         if users.get_current_user():
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Logout'
-            query = User.all()
-            query.filter('user =', users.get_current_user())
-            user = query.fetch(1)[0]
+            user = get_or_create_user(users.get_current_user())
             collections = [db.get(key) for key in user.collections]
             collections = [[collection.name, collection.key().id()] for collection in collections]
         else:
