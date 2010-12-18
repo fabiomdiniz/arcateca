@@ -5,6 +5,10 @@ from google.appengine.ext.webapp import template
 
 import os
 
+from images.views import Thumbnailer
+
+from games.views import SearchGames, AddGame
+
 from collection.views import NewCollection, ShowCollection
 from collection.models import Collection
 
@@ -37,7 +41,10 @@ class MainPage(webapp.RequestHandler):
 application = webapp.WSGIApplication(
                                      [('/', MainPage),
                                       ('/collection/new', NewCollection),
-                                      (r'/collection/(\d+)', ShowCollection)],
+                                      (r'/collection/(\d+)', ShowCollection),
+                                      (r'/games/search/(.+)', SearchGames),
+                                      (r'/collection/(\d+)/games/new', AddGame),
+                                      (r'/img/(\d+)', Thumbnailer)],
                                      debug=True)
 
 def main():

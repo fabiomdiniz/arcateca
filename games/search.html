@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Arcateca, select no Noé!</title>
+</head>
+<body>
+<div id="search">
+<table>
+<tr>
+<td></td>
+<th colspan="2">Jogo</th>
+<th>Zerou?</th>
+{% for result in results %}
+<tr>
+<td><input type="checkbox" name="{{ result.2 }}"/></td>
+<td><img src="/img/{{ result.0 }}"/></td>
+<td>{{ result.1 }}</td>
+<td><input type="checkbox" name="beated_{{ result.2 }}"/></td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</body>
+</html>

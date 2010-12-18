@@ -3,11 +3,18 @@
 <title>Arcateca, select no Noé!</title>
 </head>
 <body>
+<a href="/">Voltar para Home</a>
+<br>
 <h1>{{ nome }}</h1>
 <h2>Jogos</h2>
+<table>
 {% for game in games %}
-<h3><a href="/games/{{ game.1 }}">{{ game.0 }}</a></h3><br>
+<tr>
+<td><img src="/img/{{ game.0 }}"/></td>
+<td>{{ game.1 }}</td>
+</tr>
 {% endfor %}
+</table>
 <br>
-<h3><a href="/games/new">Adicionar Jogo</a></h3>
+<h3><a href="/collection/{{ collection }}/games/new">Adicionar Jogo</a></h3>
 </html>

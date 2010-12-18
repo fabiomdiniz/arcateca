@@ -5,9 +5,11 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext.db import Key
 
 import os
+import logging
 
 import models
 from users.views import get_or_create_user
+from games.models import Game, GameReg
 
 class NewCollection(webapp.RequestHandler):
     def get(self):
@@ -38,7 +40,13 @@ class ShowCollection(webapp.RequestHandler):
 
         collection = db.get(Key.from_path('Collection', int(idx)))
 
-        template_values = {'nome': collection.name}
+        query = GameReg.all()
+        query.filter('collection = ', collection.key())
+        logging.info('count ' + str(query.count()))
+        games = [[game_reg.game.cover.key().id(), game_reg.game.name] for game_reg in query]
+
+        template_values = {'nome': collection.name, 'collection': idx,
+                           'games': games}
 
         path = os.path.join(os.path.dirname(__file__), 'collection.html')
         self.response.out.write(template.render(path, template_values))

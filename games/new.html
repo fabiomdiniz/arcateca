@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>Arcateca, select no Noé!</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var image1 = $('<img />').attr('src', '/static/img/loading.gif');
+        $("#submit").hide();
+        $('#form_busca').submit(function() {
+            $("#results").empty().html(image1);
+            $('#results').load('/games/search/'+$("#nome").val().replace(' ','%20')+ ' #search', function(){$('#submit').show();});
+            return false;
+        });
+    });
+</script>
+</head>
+<body>
+<a href="/collection/{{ collection }}">Voltar para Coleção</a>
+<br>
+<br>
+<form id="form_busca">
+<input id="nome" type="text"/><input id="busca" type="submit" value="Buscar">
+</form>
+<form method="post">
+<div id="results">
+</div>
+<input id="submit" type="submit" value="Adicionar Jogos">
+</form>
+<br><br><br>
+{{ msg }}
+</body>
+</html>
