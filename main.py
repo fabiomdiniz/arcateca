@@ -15,6 +15,8 @@ from collection.models import Collection
 from users.models import User
 from users.views import get_or_create_user
 
+import logging
+
 class MainPage(webapp.RequestHandler):
     def get(self):
         collections = None

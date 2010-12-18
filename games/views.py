@@ -19,35 +19,21 @@ from google.appengine.api import urlfetch
 
 from models import Game, GameReg
 
-def extract_game_img(url):
-    soup = BeautifulSoup(urllib.urlopen('http://www.metacritic.com'+str(url)))
-    logging.debug('fetching '+str(url))
-    return urlfetch.Fetch(soup('img', 'product_image large_image')[0].get('src')).content
-
+from search.views import search_metacritic
 
 class SearchGames(webapp.RequestHandler):
     def get(self, name):
         if not users.get_current_user():
             self.redirect(users.create_login_url(self.request.uri))
 
-        name = name.replace('%20','+')
-        soup = BeautifulSoup(urlfetch.fetch('http://www.metacritic.com/search/game/' +str(name)+ '/results').content)
-
-        divs = soup.findAll('div', attrs={'class':'main_stats'})
-
-        results = [[divs[i].h3.a.string,divs[i].h3.a.get('href')] for i in range(len(divs))]
+        results = search_metacritic(name, 'game')
 
         output = []
 
         for result in results:
             query = Img.all()
             query.filter('url =', result[1])
-            if not query.count():
-                img = Img(data=db.Blob(extract_game_img(result[1])),
-                          url=result[1])
-                img.put()
-            else:
-                img = query.fetch(1)[0]
+            img = query.fetch(1)[0]
             query = Game.all()
             query.filter('cover =', img)
             if not query.count():
