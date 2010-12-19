@@ -17,4 +17,15 @@
 </table>
 <br>
 <h3><a href="/collection/{{ collection }}/games/new">Adicionar Jogo</a></h3>
+<h2>Filmes</h2>
+<table>
+{% for movie in movies %}
+<tr>
+<td><img src="/img/{{ movie.0 }}"/></td>
+<td>{{ movie.1 }}</td>
+</tr>
+{% endfor %}
+</table>
+<br>
+<h3><a href="/collection/{{ collection }}/movies/new">Adicionar Filme</a></h3>
 </html>

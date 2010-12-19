@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import users
@@ -8,6 +9,7 @@ import os
 from images.views import Thumbnailer
 
 from games.views import SearchGames, AddGame
+from movies.views import SearchMovies, AddMovie
 
 from collection.views import NewCollection, ShowCollection
 from collection.models import Collection
@@ -45,7 +47,9 @@ application = webapp.WSGIApplication(
                                       ('/collection/new', NewCollection),
                                       (r'/collection/(\d+)', ShowCollection),
                                       (r'/games/search/(.+)', SearchGames),
+                                      (r'/movies/search/(.+)', SearchMovies),
                                       (r'/collection/(\d+)/games/new', AddGame),
+                                      (r'/collection/(\d+)/movies/new', AddMovie),
                                       (r'/img/(\d+)', Thumbnailer)],
                                      debug=True)
 

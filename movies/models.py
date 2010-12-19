@@ -3,13 +3,13 @@ from google.appengine.ext import db
 from collection.models import Collection
 from images.models import Img
 
-class Game(db.Model):
+class Movie(db.Model):
     name = db.StringProperty(verbose_name='Nome')
-    platform = db.StringProperty(verbose_name='Plataforma')
     cover = db.ReferenceProperty(Img)
     score = db.StringProperty()
 
-class GameReg(db.Model):
+class MovieReg(db.Model):
     collection = db.ReferenceProperty(Collection)
-    beated = db.BooleanProperty()
-    game = db.ReferenceProperty(Game)
+    media_type = db.CategoryProperty(verbose_name='Tipo de Mídia') #1 -DVD, 2-BD, 3-VHS
+    movie = db.ReferenceProperty(Movie)
+    watched = db.BooleanProperty()

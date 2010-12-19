@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from google.appengine.ext import webapp, db
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import users
@@ -10,6 +11,7 @@ import logging
 import models
 from users.views import get_or_create_user
 from games.models import Game, GameReg
+from movies.models import Movie, MovieReg
 
 class NewCollection(webapp.RequestHandler):
     def get(self):
@@ -42,11 +44,16 @@ class ShowCollection(webapp.RequestHandler):
 
         query = GameReg.all()
         query.filter('collection = ', collection.key())
-        logging.info('count ' + str(query.count()))
+        logging.info('gamecount ' + str(query.count()))
         games = [[game_reg.game.cover.key().id(), game_reg.game.name] for game_reg in query]
 
+        query = MovieReg.all()
+        query.filter('collection = ', collection.key())
+        logging.info('moviecount ' + str(query.count()))
+        movies = [[movie_reg.movie.cover.key().id(), movie_reg.movie.name] for movie_reg in query]
+
         template_values = {'nome': collection.name, 'collection': idx,
-                           'games': games}
+                           'games': games, 'movies': movies}
 
         path = os.path.join(os.path.dirname(__file__), 'collection.html')
         self.response.out.write(template.render(path, template_values))

@@ -5,20 +5,26 @@
 <body>
 <div id="search">
 {% if results|length_is:"0" %}
-Nenhum jogo foi encontrado
+Nenhum Filme foi encontrado
 {% else %}
 <table>
 <tr>
-<td></td>
-<th colspan="2">Jogo</th>
-<th>Zerou?</th>
+<td>Adicionar</td>
+<th colspan="2">Filme</th>
+<th>Tipo de Mídia</th>
+<th>Assistiu?</th>
 </tr>
 {% for result in results %}
 <tr>
 <td><input type="checkbox" name="{{ result.2 }}"/></td>
 <td><img src="/img/{{ result.0 }}"/></td>
 <td>{{ result.1 }}</td>
-<td><input type="checkbox" name="beated_{{ result.2 }}"/></td>
+<td><select name="type_{{ result.2 }}">
+<option name=dvd value=1>DVD</option>
+<option name=bd value=2>Blu-ray</option>
+<option name=vhs value=3>VHS</option>
+</select></td>
+<td><input type="checkbox" name="watched_{{ result.2 }}" checked/></td>
 </tr>
 {% endfor %}
 </table>

@@ -18,32 +18,31 @@ from images.models import Img
 
 from google.appengine.api import urlfetch
 
-from models import Game, GameReg
+from models import Movie, MovieReg
 
 from search.views import search_metacritic
 
-class SearchGames(webapp.RequestHandler):
+class SearchMovies(webapp.RequestHandler):
     def get(self, name):
         if not users.get_current_user():
             self.redirect(users.create_login_url(self.request.uri))
-        logging.info('Iniciando busca')
-        results = search_metacritic(name, 'game')
-        logging.info('Fetch concluido')
+
+        results = search_metacritic(name, 'movie')
+
         output = []
 
         for result in results:
             query = Img.all()
             query.filter('url =', result[1])
             img = query.fetch(1)[0]
-            query = Game.all()
+            query = Movie.all()
             query.filter('cover =', img)
             if not query.count():
-                platform = str(result[1])[:str(result[1]).rfind('/')].replace('/game/','')
-                game = Game(name=str(result[0]),cover=img,platform=platform,score=str(result[2]))
-                game.put()
+                movie = Movie(name=str(result[0]),cover=img,score=str(result[2]))
+                movie.put()
             else:
-                game = query.fetch(1)[0]
-            output.append([img.key().id(), result[0], game.key().id()])
+                movie = query.fetch(1)[0]
+            output.append([img.key().id(), result[0], movie.key().id()])
 
         template_values = {'results': output}
 
@@ -54,7 +53,7 @@ class SearchGames(webapp.RequestHandler):
 
         self.redirect('/')
 
-class AddGame(webapp.RequestHandler):
+class AddMovie(webapp.RequestHandler):
     def get(self, collection_id):
         if not users.get_current_user():
             self.redirect(users.create_login_url(self.request.uri))
@@ -72,16 +71,17 @@ class AddGame(webapp.RequestHandler):
         
         logging.info(str(self.request.arguments()))
 
-        checks = [arg for arg in self.request.arguments() if arg.find('beated') == -1]
+        checks = [arg for arg in self.request.arguments() if arg.find('watched') == -1 and arg.find('type') == -1]
 
         for check in checks:
-            game_id = int(check)
-            beated = 'beated_'+str(check) in self.request.arguments()
-            game = db.get(db.Key.from_path('Game', game_id))
-            game_reg = GameReg(game=game,collection=collection,beated=beated)
-            game_reg.put()
+            movie_id = int(check)
+            watched = 'watched_'+str(check) in self.request.arguments()
+            media_type = db.Category(self.request.get('type_'+str(check)))
+            movie = db.get(db.Key.from_path('Movie', movie_id))
+            movie_reg = MovieReg(movie=movie,collection=collection,watched=watched,media_type=media_type)
+            movie_reg.put()
 
-        template_values = {'collection':collection_id, 'msg':'Jogos adicionados com sucesso!'}
+        template_values = {'collection':collection_id, 'msg':'Filmes adicionados com sucesso!'}
 
         path = os.path.join(os.path.dirname(__file__), 'new.html')
         self.response.out.write(template.render(path, template_values))
