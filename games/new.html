@@ -18,7 +18,25 @@
         $('#form_busca').submit(function() {
             $("#submit").hide()
             $("#results").empty().html(image1);
-            $('#results').load('/games/search/'+ReplaceAll($("#nome").val(),' ','%20')+ ' #search', function(){$('#submit').show();});
+            $('#results').load('/games/search/'+ReplaceAll($("#nome").val(),' ','%20')+ ' #search', function(response, status, xhr) {
+                          if (status == "error") {
+                            $('#results').load('/games/search/'+ReplaceAll($("#nome").val(),' ','%20')+ ' #search', function(response, status, xhr) { 
+                                if (status == "error") {
+                                    $("#results").empty().html("<b>Try again</b>") 
+                                }
+                                else{
+                                if ($("#results").text().search("Nenhum jogo foi encontrado")==-1){
+                                $('#submit').show();
+                                }
+                                }
+                                });
+                            }
+                            else{
+                                if ($("#results").text().search("Nenhum jogo foi encontrado")==-1){
+                                $('#submit').show();
+                                }
+                            }
+                          });
             return false;
         });
     });
@@ -33,10 +51,11 @@
 </form>
 <form method="post">
 <div id="results">
+{{ msg }}
 </div>
 <input id="submit" type="submit" value="Adicionar Jogos">
 </form>
 <br><br><br>
-{{ msg }}
+
 </body>
 </html>

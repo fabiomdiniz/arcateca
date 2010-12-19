@@ -29,15 +29,22 @@ def extract_img(url):
         return urlfetch.Fetch('http://' + url + '/static/img/image_not_found.jpg').content
     
 
+def extract_score(div):
+    if len(div) == 5:
+        return div.div.div('span')[1].string
+    else:
+        return 'XX'
+
 def search_metacritic(name, tag):
     try:
         name = name.replace('%20','+')
+        logging.info('iniciando fecth de ' + str(name))
         soup = BeautifulSoup(urlfetch.fetch('http://www.metacritic.com/search/' + str(tag) + '/' +str(name)+ '/results').content)
 
         divs = soup.findAll('div', attrs={'class':'main_stats'})
 
-        results = [[divs[i].h3.a.string,divs[i].h3.a.get('href')] for i in range(len(divs))]
-        
+        results = [[divs[i].h3.a.string,divs[i].h3.a.get('href'),extract_score(divs[i])] for i in range(len(divs))]
+        logging.info('coletando imagens')
         for result in results:
             query = Img.all()
             query.filter('url =', result[1])
@@ -46,5 +53,6 @@ def search_metacritic(name, tag):
                           url=result[1])
                 img.put()
         return results
-    except:
+    except Exception, e:
+        logging.info('ERRO :' + str(e))
         return search_metacritic(name,tag)

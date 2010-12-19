@@ -25,9 +25,9 @@ class SearchGames(webapp.RequestHandler):
     def get(self, name):
         if not users.get_current_user():
             self.redirect(users.create_login_url(self.request.uri))
-
+        logging.info('Iniciando busca')
         results = search_metacritic(name, 'game')
-
+        logging.info('Fetch concluido')
         output = []
 
         for result in results:
@@ -38,7 +38,7 @@ class SearchGames(webapp.RequestHandler):
             query.filter('cover =', img)
             if not query.count():
                 platform = str(result[1])[:str(result[1]).rfind('/')].replace('/game/','')
-                game = Game(name=str(result[0]),cover=img,platform=platform)
+                game = Game(name=str(result[0]),cover=img,platform=platform,score=str(result[2]))
                 game.put()
             else:
                 game = query.fetch(1)[0]

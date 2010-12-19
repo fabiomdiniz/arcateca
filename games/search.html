@@ -4,6 +4,9 @@
 </head>
 <body>
 <div id="search">
+{% if results|length_is:"0" %}
+Nenhum jogo foi encontrado
+{% else %}
 <table>
 <tr>
 <td></td>
@@ -18,6 +21,7 @@
 </tr>
 {% endfor %}
 </table>
+{% endif %}
 </div>
 </body>
 </html>
