@@ -1,0 +1,8 @@
+h1. Arcateca
+
+Aplicativo para centralizar coleções de livros, filmes e jogos
+
+h2. Coleções atuais:
+
+* Jogos (fonte: Metacritic)
+* Filmes (fonte: Metacritic)
