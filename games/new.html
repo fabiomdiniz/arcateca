@@ -25,14 +25,14 @@
                                     $("#results").empty().html("<b>Try again</b>") 
                                 }
                                 else{
-                                if ($("#results").text().search("Nenhum jogo foi encontrado")==-1){
+                                if ($("#results").text().search("No game found")==-1){
                                 $('#submit').show();
                                 }
                                 }
                                 });
                             }
                             else{
-                                if ($("#results").text().search("Nenhum jogo foi encontrado")==-1){
+                                if ($("#results").text().search("No game found")==-1){
                                 $('#submit').show();
                                 }
                             }
@@ -43,17 +43,17 @@
 </script>
 </head>
 <body>
-<a href="/collection/{{ collection }}">Voltar para Coleção</a>
+<a href="/collection/{{ collection }}">Back to Collection</a>
 <br>
 <br>
 <form id="form_busca">
-<input id="nome" type="text"/><input id="busca" type="submit" value="Buscar">
+<input id="nome" type="text"/><input id="busca" type="submit" value="Search">
 </form>
 <form method="post">
 <div id="results">
 {{ msg }}
 </div>
-<input id="submit" type="submit" value="Adicionar Jogos">
+<input id="submit" type="submit" value="Add Games">
 </form>
 <br><br><br>
 

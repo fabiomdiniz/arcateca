@@ -5,7 +5,7 @@
 <body>
 <a href="{{ url }}">{{ url_linktext }}</a>
 {% if logged %}
-<br><a href="/collection/new">Criar Coleção</a>
+<br><a href="/collection/new">Add Collection</a>
 <br>
 {% for collection in collections %}
 <a href="/collection/{{ collection.1 }}">{{ collection.0 }}</a><br>

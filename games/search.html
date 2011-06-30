@@ -5,13 +5,13 @@
 <body>
 <div id="search">
 {% if results|length_is:"0" %}
-Nenhum jogo foi encontrado
+No game found
 {% else %}
 <table>
 <tr>
 <td></td>
-<th colspan="2">Jogo</th>
-<th>Zerou?</th>
+<th colspan="2">Game</th>
+<th>Beated It?</th>
 </tr>
 {% for result in results %}
 <tr>

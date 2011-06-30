@@ -5,14 +5,14 @@
 <body>
 <div id="search">
 {% if results|length_is:"0" %}
-Nenhum Filme foi encontrado
+No movie found
 {% else %}
 <table>
 <tr>
-<td>Adicionar</td>
-<th colspan="2">Filme</th>
-<th>Tipo de Mídia</th>
-<th>Assistiu?</th>
+<td>Add</td>
+<th colspan="2">Movie</th>
+<th>Type</th>
+<th>Watched it?</th>
 </tr>
 {% for result in results %}
 <tr>
