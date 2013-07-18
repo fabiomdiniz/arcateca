@@ -2,6 +2,10 @@ h1. Arcateca
 
 Aplicativo para centralizar coleções de livros, filmes e jogos
 
+h2. Website
+
+http://arcateca.appspot.com/
+
 h2. Coleções atuais:
 
 * Jogos (fonte: Metacritic)
